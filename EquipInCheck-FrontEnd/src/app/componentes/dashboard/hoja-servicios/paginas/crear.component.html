@@ -1,0 +1,320 @@
+<h1 mat-dialog-title style="font-weight: 500;" >{{ titulo_ventana }}</h1>
+
+<mat-horizontal-stepper #stepper>
+    <mat-step [stepControl]="clienteFormGroup" errorMessage="Datos cliente incompleto">
+      <form [formGroup]="clienteFormGroup">
+        <ng-template matStepLabel>Cliente</ng-template>
+
+        <br>
+        <div class="row mb-2">
+        
+            <!-- Nombres -->
+            <div class="col-6">
+                <input type="hidden" formControlName="id">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                    <mat-error *ngIf="isValidField('nombre')">
+                        {{ getFieldError('nombre') }}
+                    </mat-error>
+            </mat-form-field>
+            </div>
+
+            <!-- Apellidos -->
+            <div class="col-6">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Apellido</mat-label>
+                    <input matInput formControlName="apellido">
+                    <mat-error *ngIf="isValidField('apellido')">
+                        {{ getFieldError('apellido') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+        
+            <!-- Telefono -->
+            <div class="col-6">
+                <mat-form-field style="margin-right: 10px;">
+                    <mat-label>Telefono</mat-label>
+                    <input matInput formControlName="telefono">
+                    <mat-error *ngIf="isValidField('telefono')">
+                        {{ getFieldError('telefono') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+    
+             <!-- Correo -->
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-label>Correo</mat-label>
+                    <input matInput formControlName="correo">
+                    <mat-error *ngIf="isValidField('correo')">
+                        {{ getFieldError('correo') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+        
+            <!-- Direccion -->
+            <div class="col-6">
+                <mat-form-field style="margin-right: 10px;">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput formControlName="direccion">
+                    <mat-error *ngIf="isValidField('direccion')">
+                        {{ getFieldError('direccion') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+    
+             <!-- Ruc -->
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-label>Cédula o RUC</mat-label>
+                    <input matInput formControlName="ruc">
+                    <mat-error *ngIf="isValidField('ruc')">
+                        {{ getFieldError('cédula o ruc') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            
+        </div>
+
+        <div class="row mb-2">
+        
+            <!-- Empresa -->
+            <div class="col-6">
+                <mat-form-field style="margin-right: 10px;">
+                    <mat-label>Empresa</mat-label>
+                    <input matInput formControlName="empresa">
+                    
+                </mat-form-field>
+            </div>
+    
+             <!-- Cargo -->
+            <div class="col-6">
+                <mat-form-field>
+                    <mat-label>Cargo</mat-label>
+                    <input matInput formControlName="cargo">
+                    <mat-error *ngIf="isValidField('cargo')">
+                        {{ getFieldError('cargo') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            
+        </div>
+          
+        <div>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="equipoFormGroup" errorMessage="Datos equipo incompleto">
+      <form [formGroup]="equipoFormGroup">
+        <ng-template matStepLabel>Equipo</ng-template>
+
+        <br>
+        <div class="row mb-2">
+        
+            <!-- Nombres -->
+            <div class="col-4">
+                <input type="hidden" formControlName="id">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre">
+                    <mat-error *ngIf="isValidField2('nombre')">
+                        {{ getFieldError2('nombre') }}
+                    </mat-error>
+            </mat-form-field>
+            </div>
+
+            <!-- Tipo -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Tipo</mat-label>
+                    <input matInput formControlName="tipo">
+                    <mat-error *ngIf="isValidField2('tipo')">
+                        {{ getFieldError2('tipo') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Marca -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Marca</mat-label>
+                    <input matInput formControlName="marca">
+                    <mat-error *ngIf="isValidField2('marca')">
+                        {{ getFieldError2('marca') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+
+            <!-- Modelo -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Modelo</mat-label>
+                    <input matInput formControlName="modelo">
+                    <mat-error *ngIf="isValidField2('modelo')">
+                        {{ getFieldError2('modelo') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        
+            <!-- Procesador -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Procesador</mat-label>
+                    <input matInput formControlName="procesador">
+                    <mat-error *ngIf="isValidField2('procesador')">
+                        {{ getFieldError2('procesador') }}
+                    </mat-error>
+            </mat-form-field>
+            </div>
+
+            <!-- Optico -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Optico</mat-label>
+                    <input matInput formControlName="optico">
+                    <mat-error *ngIf="isValidField2('optico')">
+                        {{ getFieldError2('optico') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+
+            <!-- Disco -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Disco</mat-label>
+                    <input matInput formControlName="disco">
+                    <mat-error *ngIf="isValidField2('disco')">
+                        {{ getFieldError2('disco') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        
+            <!-- Otros -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Otros</mat-label>
+                    <input matInput formControlName="otros">
+                    <mat-error *ngIf="isValidField2('otros')">
+                        {{ getFieldError2('otros') }}
+                    </mat-error>
+            </mat-form-field>
+            </div>
+
+            <!-- Cargador -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Cargador</mat-label>
+                    <input matInput formControlName="cargador">
+                    <mat-error *ngIf="isValidField2('cargador')">
+                        {{ getFieldError2('cargador') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+
+        <div class="row mb-2">
+        
+
+
+            <!-- Bandeja -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Bandeja</mat-label>
+                    <input matInput formControlName="bandeja">
+                    <mat-error *ngIf="isValidField2('bandeja')">
+                        {{ getFieldError2('bandeja') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Serie -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Serie</mat-label>
+                    <input matInput formControlName="serie">
+                    <mat-error *ngIf="isValidField2('serie')">
+                        {{ getFieldError2('serie') }}
+                    </mat-error>
+            </mat-form-field>
+            </div>
+
+            <!-- Memoria -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Memoria</mat-label>
+                    <input matInput formControlName="memoria">
+                    <mat-error *ngIf="isValidField2('memoria')">
+                        {{ getFieldError2('memoria') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+
+        </div>
+
+        <div class="row mb-2">
+
+
+            <!-- Bateria -->
+            <div class="col-4">
+                <mat-form-field  appearance="fill">
+                    <mat-label>Bateria</mat-label>
+                    <input matInput formControlName="bateria">
+                    <mat-error *ngIf="isValidField2('bateria')">
+                        {{ getFieldError2('bateria') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+
+            <!-- Condiciones Fisicas Y Esteticas -->
+            <div class="col-8">
+                <mat-form-field appearance="fill">
+                    <mat-label>Condiciones Fisicas Y Esteticas</mat-label>
+                    <textarea matInput formControlName="condicionesFisicasEsteticasIngreso"></textarea>
+                    <mat-error *ngIf="isValidField2('condicionesFisicasEsteticasIngreso')">
+                        {{ getFieldError2('condicionesFisicasEsteticasIngreso') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div>
+          <button mat-button matStepperPrevious>Retroceder</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+        <br>
+        <ng-template matStepLabel>{{ nombre_boton }}</ng-template>
+        <p>¿Has completado todos los campos? Si es así, puedes guardar la información. De lo contrario, asegúrate de llenar los campos pendientes antes de guardar.</p>
+        <div>
+            <button mat-button matStepperPrevious>Retroceder</button>
+            <button class="btn btn-secondary m-2" mat-dialog-close>Cancelar</button>
+            <button class="btn btn-primary" type="submit" (click)="guardar()" [disabled]="equipoFormGroup.invalid || clienteFormGroup.invalid">{{ nombre_boton }}</button>
+        </div>
+    </mat-step>
+    
+  </mat-horizontal-stepper>
+  
