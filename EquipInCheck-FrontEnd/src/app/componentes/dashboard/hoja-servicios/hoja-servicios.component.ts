@@ -21,7 +21,7 @@ export class HojaServiciosComponent implements AfterViewInit , OnInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  columnas: string[] = ['ORDEN', 'FECHA INGRESO', 'CLIENTE', 'CEDULA', 'EQUIPO', 'TIPO EQUIPO', 'TECNICO','ESTADO','ACCIONES'];
+  columnas: string[] = ['ORDEN', 'FECHA INGRESO', 'CLIENTE', 'CEDULA', 'EQUIPO', 'TIPO EQUIPO', 'TECNICO','ACCIONES'];
   dataSource = new MatTableDataSource<HojaDeServicio>;
 
   constructor(
@@ -40,30 +40,10 @@ export class HojaServiciosComponent implements AfterViewInit , OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
-  aplicarFiltro(valor: string) {
-    // Convierte el valor de entrada a minúsculas
-    const filtro = valor.trim().toLowerCase();
-    
-    // Aplica el filtro solo si el valor de entrada es un número
-    if (!isNaN(Number(filtro))) {
-      this.dataSource.filterPredicate = (data, filter) => {
-        return data.cliente.ruc.toLowerCase().includes(filter);
-      };
-      this.dataSource.filter = filtro;
-    } 
-  
-    // Si se está utilizando paginación, vuelve a la primera página después de aplicar el filtro
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  aplicarFiltro(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-
-  
-
-  
-
-  
 
   listarHojaServicios(){
     return this.servicio.getHojasServicios().subscribe(
@@ -107,7 +87,7 @@ export class HojaServiciosComponent implements AfterViewInit , OnInit{
   eliminarHojaServicio(fila: any): void {
 
 
-    const pregunta = `¿Estás seguro de eliminar a Hoja de servicio con la orden <strong>${fila.id}</strong>?`;
+    const pregunta = `¿Estás seguro de eliminar a Hoja de servicio con la orden <strong>${fila.ordenTrabajo}</strong>?`;
     const mensajeBoton = `Sí, eliminar!`;
     const mensajeConfirmacion = `Hoja Servicio eliminado con éxito!`;
 

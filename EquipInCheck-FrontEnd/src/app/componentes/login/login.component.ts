@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit{
     private servicioSession: SessionService
   ) {
     this.formulario = this.fb.group({
-      usuario: ['', Validators.required],
-      password: ['', Validators.required],
+      usuario: ['admin@gmail.com', Validators.required],
+      password: ['admin', Validators.required],
     });
   }
 
@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit{
       },
       error: (error: any) => {
         swall.fire({
-          html: 'Usuario o contraseña incorrectos.',
+          html: 'Error al iniciar sesión',
           icon: 'error',
           confirmButtonColor: '#d80227',
         });
