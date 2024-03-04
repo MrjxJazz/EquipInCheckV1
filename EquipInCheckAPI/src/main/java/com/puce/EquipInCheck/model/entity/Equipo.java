@@ -23,6 +23,11 @@ public class Equipo {
     private String bateria;
     private String nombre;
 
+    @Enumerated(EnumType.STRING)
+    private EstadoEquipo estadoEquipo;
+
+
+
     @Column(name = "condiciones_fisicas_esteticas_ingreso", columnDefinition = "TEXT")
     private String condicionesFisicasEsteticasIngreso;
 
@@ -31,7 +36,7 @@ public class Equipo {
 
     public Equipo(String tipo, String marca, String modelo, String procesador, String optico, String disco,
             String otros, String cargador, String bandeja, String serie, String memoria, String bateria,
-            String condicionesFisicasEsteticasIngreso, String nombre) {
+            String condicionesFisicasEsteticasIngreso, String nombre, EstadoEquipo estadoEquipo) {
         this.tipo = tipo;
         this.marca = marca;
         this.modelo = modelo;
@@ -46,6 +51,8 @@ public class Equipo {
         this.bateria = bateria;
         this.condicionesFisicasEsteticasIngreso = condicionesFisicasEsteticasIngreso;
         this.nombre = nombre;
+        this.estadoEquipo = estadoEquipo;
+        
     }
 
     public Long getId() {
@@ -166,6 +173,14 @@ public class Equipo {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public EstadoEquipo getEstadoEquipo() {
+        return estadoEquipo;
+    }
+
+    public void setEstadoEquipo(EstadoEquipo estadoEquipo) {
+        this.estadoEquipo = estadoEquipo;
     }
 
 

@@ -16,9 +16,13 @@ public class Usuario {
     private String cedula;
     private boolean estado = true;
 
-
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
+    
+
+
+
+   
 
 
     public Usuario() {

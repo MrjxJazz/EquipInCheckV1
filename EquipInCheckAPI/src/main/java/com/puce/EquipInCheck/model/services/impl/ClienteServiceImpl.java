@@ -49,4 +49,9 @@ public class ClienteServiceImpl implements ClienteService {
         clienteRepository.deleteById(id);
     }
 
+    @Override
+    public Cliente buscarClientePorCedula(String ruc) {
+        return clienteRepository.findByRuc(ruc);
+    }
+
 }

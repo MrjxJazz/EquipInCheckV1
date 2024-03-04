@@ -15,6 +15,8 @@ public class HojaDeServicio {
 
     private String ordenTrabajo;
 
+
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -26,6 +28,7 @@ public class HojaDeServicio {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
 
     @PrePersist
     protected void onCreate() {
@@ -41,6 +44,7 @@ public class HojaDeServicio {
         this.cliente = cliente;
         this.equipo = equipo;
         this.usuario = usuario;
+        
     }
 
     public Long getId() {
@@ -90,6 +94,11 @@ public class HojaDeServicio {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+   
+
+
+
 
 }
 

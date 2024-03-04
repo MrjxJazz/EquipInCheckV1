@@ -30,7 +30,7 @@ public class EquipoController {
         if (equipo != null) {
             return ResponseEntity.ok(equipo);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -43,8 +43,10 @@ public class EquipoController {
     @PutMapping("/{id}")
     public ResponseEntity<Equipo> updateEquipo(@PathVariable Long id, @RequestBody Equipo equipo) {
         Equipo updatedEquipo = equipoService.actualizarEquipo(id, equipo);
+
         return ResponseEntity.ok(updatedEquipo);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEquipo(@PathVariable Long id) {

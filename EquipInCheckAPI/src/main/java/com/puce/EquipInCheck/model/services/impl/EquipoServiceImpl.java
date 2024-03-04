@@ -25,10 +25,12 @@ public class EquipoServiceImpl implements EquipoService {
                 .orElseThrow(() -> new RuntimeException("Equipo no encontrado"));
     }
 
+   
     @Override
     public Equipo guardarEquipo(Equipo equipo) {
         return equipoRepository.save(equipo);
     }
+
 
     @Override
     public Equipo actualizarEquipo(Long id, Equipo equipo) {
@@ -48,6 +50,7 @@ public class EquipoServiceImpl implements EquipoService {
         equipoExistente.setBateria(equipo.getBateria());
         equipoExistente.setCondicionesFisicasEsteticasIngreso(equipo.getCondicionesFisicasEsteticasIngreso());
         equipoExistente.setNombre(equipo.getNombre());
+        equipoExistente.setEstadoEquipo(equipo.getEstadoEquipo());
      
         return equipoRepository.save(equipoExistente);
     }

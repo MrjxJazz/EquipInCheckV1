@@ -9,6 +9,7 @@ public interface HojaDeServicioService {
     HojaDeServicio obtenerHojaDeServicioPorId(Long id);
     HojaDeServicio actualizarHojaDeServicio(Long id, HojaDeServicio hojaDeServicio);
     void eliminarHojaDeServicio(Long id);
+    HojaDeServicio guardarHojaDeServicio(HojaDeServicio hojaDeServicio);
 
 
 }

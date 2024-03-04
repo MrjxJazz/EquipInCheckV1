@@ -13,6 +13,8 @@ import com.puce.EquipInCheck.model.repository.EquipoRepository;
 import com.puce.EquipInCheck.model.repository.HojaDeServicioRepository;
 import com.puce.EquipInCheck.model.services.HojaDeServicioService;
 
+import jakarta.transaction.Transactional;
+
 
 @Service
 public class HojaDeServicioServiceImpl implements HojaDeServicioService {
@@ -37,6 +39,43 @@ public class HojaDeServicioServiceImpl implements HojaDeServicioService {
                 .orElseThrow(() -> new RuntimeException("Hoja de servicio no encontrada"));
     }
 
+    @Transactional
+    @Override
+    public HojaDeServicio guardarHojaDeServicio(HojaDeServicio hojaDeServicio) {
+ 
+        if (hojaDeServicio.getCliente() != null && hojaDeServicio.getCliente().getId() == null) {
+            System.out.println("OK1");
+            Cliente clienteGuardado = clienteRepository.save(hojaDeServicio.getCliente());
+            hojaDeServicio.setCliente(clienteGuardado);
+        }
+ 
+        if (hojaDeServicio.getEquipo() != null && hojaDeServicio.getEquipo().getId() == null) {
+            System.out.println("OK2");
+            Equipo equipoGuardado = equipoRepository.save(hojaDeServicio.getEquipo());
+            hojaDeServicio.setEquipo(equipoGuardado);
+        }
+
+        System.out.println("OK3"+hojaDeServicio);
+ 
+        
+        Long ultimoId = hojaDeServicioRepository.findMaxId();
+        if(hojaDeServicioRepository.findMaxId() == null){
+            ultimoId = 0L;
+ 
+        }else{
+            ultimoId = hojaDeServicioRepository.findMaxId();
+        }
+        System.out.println("OK4"+ultimoId);
+        String nuevoOrdenTrabajo = String.format("#%04d", ultimoId + 1);
+ 
+ 
+ 
+        hojaDeServicio.setOrdenTrabajo(nuevoOrdenTrabajo);
+        return hojaDeServicioRepository.save(hojaDeServicio);
+    }
+
+
+
    
 
     @Override
@@ -60,6 +99,7 @@ public class HojaDeServicioServiceImpl implements HojaDeServicioService {
                 clienteExistente.setCorreo(hojaDeServicio.getCliente().getCorreo());
                 clienteExistente.setDireccion(hojaDeServicio.getCliente().getDireccion());
                 clienteExistente.setRuc(hojaDeServicio.getCliente().getRuc());
+                
         
                 clienteRepository.save(clienteExistente);
             }
@@ -87,6 +127,7 @@ public class HojaDeServicioServiceImpl implements HojaDeServicioService {
                 equipoExistente.setMemoria(hojaDeServicio.getEquipo().getMemoria());
                 equipoExistente.setBateria(hojaDeServicio.getEquipo().getBateria());
                 equipoExistente.setNombre(hojaDeServicio.getEquipo().getNombre());
+                equipoExistente.setEstadoEquipo(hojaDeServicio.getEquipo().getEstadoEquipo());
 
                 equipoRepository.save(equipoExistente);
             }

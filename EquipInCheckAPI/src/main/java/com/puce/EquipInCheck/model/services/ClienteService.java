@@ -10,6 +10,7 @@ public interface ClienteService {
     Cliente guardarCliente(Cliente cliente);
     Cliente actualizarCliente(Long id, Cliente cliente);
     void eliminarCliente(Long id);
+    Cliente buscarClientePorCedula(String ruc);
 
    
 }

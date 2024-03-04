@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.puce.EquipInCheck.model.entity.HojaDeServicio;
+
 import com.puce.EquipInCheck.model.services.HojaDeServicioService;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/hojas-de-servicio")
 @CrossOrigin(origins = { "*" })
@@ -15,6 +17,7 @@ public class HojaDeServicioController {
 
     @Autowired
     private HojaDeServicioService hojaDeServicioService;
+    
 
     @GetMapping
     public ResponseEntity<List<HojaDeServicio>> getAllHojasDeServicio() {
@@ -32,6 +35,8 @@ public class HojaDeServicioController {
         }
     }
 
+
+
    
 
     @PutMapping("/{id}")
@@ -44,5 +49,16 @@ public class HojaDeServicioController {
     public ResponseEntity<Void> deleteHojaDeServicio(@PathVariable Long id) {
         hojaDeServicioService.eliminarHojaDeServicio(id);
         return ResponseEntity.ok().build();
+
+
     }
+
+    @PostMapping
+    public ResponseEntity<HojaDeServicio> saveHojaDeServicio(@RequestBody HojaDeServicio hojaDeServicio) {
+        HojaDeServicio savedHojaDeServicio = hojaDeServicioService.guardarHojaDeServicio(hojaDeServicio);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedHojaDeServicio);
+    }
+   
+    
 }
+

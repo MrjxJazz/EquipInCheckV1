@@ -51,4 +51,14 @@ public class ClienteController {
         clienteService.eliminarCliente(id);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/api/clientes")
+    public ResponseEntity<Cliente> buscarClientePorCedula(@RequestParam String ruc) {
+        Cliente cliente = clienteService.buscarClientePorCedula(ruc);
+        if (cliente != null) {
+            return ResponseEntity.ok(cliente);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
