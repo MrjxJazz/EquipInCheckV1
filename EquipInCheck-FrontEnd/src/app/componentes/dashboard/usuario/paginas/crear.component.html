@@ -60,7 +60,7 @@
     <div class="row mb-2">
         <mat-form-field  appearance="fill">
             <mat-label>Correo</mat-label>
-            <input type="email" formControlName="correoElectronico" matInput placeholder="admin@idat.com" (keyup)="validarcorreo($event)">
+            <input type="email" formControlName="correoElectronico" matInput (keyup)="validarcorreo($event)">
             <mat-error *ngIf="isValidField('correoElectronico')">
                 {{ getFieldError('correoElectronico') }}
             </mat-error>
@@ -120,13 +120,3 @@
     </div> 
 
 </form>
-
-
-
-
-
-
-  
-  
-
-

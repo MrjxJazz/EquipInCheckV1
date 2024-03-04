@@ -40,6 +40,12 @@ export class UsuarioComponent implements AfterViewInit , OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
+  aplicarFiltro(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
   listarUsuarios(){
     return this.servicio.getUsuarios().subscribe(
       {next: res => {

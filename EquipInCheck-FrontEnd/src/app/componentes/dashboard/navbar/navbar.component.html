@@ -12,19 +12,14 @@
     <nav id="sidebar" class="sidebar js-sidebar">
 
         <div class="sidebar-content js-simplebar">
-
-            <a class="sidebar-brand" href="index.html">
-                <span class="sidebar-brand-text align-middle">
-                    EquipInCheck
-                </span>
-            </a>
-
-            <div class="row">
+            <div class="flex-shrink-0">
+                <img src="/assets/imagen/userdefault12.jpg" alt="Charles Hall" 
+                width="259" height="48" />
+            </div>
+            <br>
+             <div class="row">
                 <div class="d-flex justify-content-center" style="margin-left: 23px">
-                    <div class="flex-shrink-0">
-                        <img src="/assets/imagen/userdefault.png" class="avatar img-fluid rounded me-1"
-                            alt="Charles Hall" />
-                    </div>
+    
                     <div class="flex-grow-1 ps-2">
                         <a class="sidebar-user-title" style="color: #fff">
                             {{this.servicioSession.getUsuarioNombre()}}
@@ -40,13 +35,13 @@
 
                 <li class="sidebar-item" routerLinkActive="active">
                     <a class="sidebar-link" routerLink="/dashboard/hoja_servicio">
-                        <i class="fa-solid fa-users fa-lg"></i> <span class="align-middle">Hoja servicio</span>
+                        <i class="fa-solid fa-users fa-lg"></i> <span class="align-middle">Hojas de Servicio</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item" routerLinkActive="active" *ngIf="this.servicioSession.getRolNombre() == 'ADMINISTRADOR'">
                     <a class="sidebar-link" routerLink="/dashboard/usuarios">
-                        <i class="fa-solid fa-user fa-lg"></i> <span class="align-middle">Usuario</span>
+                        <i class="fa-solid fa-user fa-lg"></i> <span class="align-middle">Técnicos</span>
                     </a>
                 </li>
             </ul>

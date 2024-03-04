@@ -6,36 +6,46 @@ import { HojaServicioService } from '../services/hoja-servicio.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import swall from 'sweetalert2';
 
+
+const soloLetrasRegex = /^[a-zA-Z]+$/;
+
+
+
+
+
 @Component({
   selector: 'app-crear',
   templateUrl: './crear.component.html',
   styleUrls: ['./crear.component.css'],
   providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
-  }]
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
+  }],
+
 })
-export class CrearComponent implements OnInit{ 
+
+
+export class CrearComponent implements OnInit {
 
   clienteFormGroup: FormGroup;
   equipoFormGroup: FormGroup;
-  idCliente: number ;
-  idEquipo: number ;
+  idCliente: number;
+  idEquipo: number;
   titulo_ventana: string = 'Nuevo Hoja de servicios';
-  nombre_boton: string = 'Guardar'
+  nombre_boton: string = 'Guardar';
+  
 
   constructor(
     private _formBuilder: FormBuilder,
     private hojaservicioService: HojaServicioService,
-    @Inject(MAT_DIALOG_DATA) public datoedit : any,
-    private dialog : MatDialogRef<CrearComponent>
-    ) {}
+    @Inject(MAT_DIALOG_DATA) public datoedit: any,
+    private dialog: MatDialogRef<CrearComponent>
+  ) { }
 
 
   ngOnInit() {
 
     this.equipoFormGroup = this._formBuilder.group({
       id: [null],
-      nombre: ['', Validators.required,],
       tipo: ['', Validators.required],
       marca: ['', Validators.required],
       modelo: ['', Validators.required],
@@ -50,21 +60,22 @@ export class CrearComponent implements OnInit{
         [
           Validators.required,
           this.validarNumerico('serie'),
-         
+
         ]
       ],
       memoria: ['', Validators.required],
       bateria: ['', Validators.required],
-      condicionesFisicasEsteticasIngreso: ['', Validators.required]
+      condicionesFisicasEsteticasIngreso: ['', Validators.required],
+      estadoEquipo: ['']
 
     });
-    
+
     this.clienteFormGroup = this._formBuilder.group({
       id: [null],
       empresa: [''],
       cargo: [''],
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
+      nombre: ['', [Validators.required, this.validarTexto('nombre')]],
+            apellido: ['', [Validators.required, this.validarTexto('apellido')]],
       telefono: [
         '',
         [
@@ -74,19 +85,20 @@ export class CrearComponent implements OnInit{
         ]
       ],
       correo: ['', [Validators.required, Validators.email]],
-      direccion: ['',Validators.required],
+      direccion: ['', Validators.required],
       ruc: [
         '',
         [
           Validators.required,
           this.validarNumerico('ruc'),
         ]
-      ]
+      ],
+
     });
 
-    if(this.datoedit){
+    if (this.datoedit) {
 
-      this.titulo_ventana = 'Editar Hoja de servicios N° ' +  this.datoedit.ordenTrabajo;
+      this.titulo_ventana = 'Editar Hoja de servicios N° ' + this.datoedit.id;
       this.nombre_boton = 'Actualizar'
 
       this.hojaservicioService.buscarHojaServicioId(this.datoedit.id).subscribe(({
@@ -95,7 +107,7 @@ export class CrearComponent implements OnInit{
             this.idCliente = res.cliente.id;
             this.clienteFormGroup.patchValue(res.cliente);
           }
-  
+
           if (res.equipo) {
             this.idEquipo = res.equipo.id;
             this.equipoFormGroup.patchValue(res.equipo);
@@ -107,6 +119,14 @@ export class CrearComponent implements OnInit{
     }
   }
 
+
+
+
+
+  
+  
+
+
   validarLongitud(longitud: number, campo: string) {
     return (control: FormControl) => {
       const valor = control.value;
@@ -117,11 +137,11 @@ export class CrearComponent implements OnInit{
       }
     };
   }
-  
+
   validarNumerico(campo: string) {
     return (control: FormControl): { [key: string]: any } | null => {
       const esNumerico = /^[0-9]+$/.test(control.value);
-  
+
       if (esNumerico) {
         return null;
       } else {
@@ -130,6 +150,21 @@ export class CrearComponent implements OnInit{
     };
   }
 
+ 
+
+
+  validarTexto(campo: string) {
+    return (control: FormControl): { [key: string]: any } | null => {
+        const esTexto = /^[a-zA-Z]+$/.test(control.value);
+
+        if (esTexto) {
+            return null; // Retornar null indica que la validación pasó
+        } else {
+            return { patternTexto: true }; // Retornar un objeto con una clave indica un error de validación
+        }
+    };
+}
+
   guardar() {
 
     const usuarioJSON = sessionStorage.getItem('UsuarioLogeado');
@@ -137,48 +172,55 @@ export class CrearComponent implements OnInit{
     if (usuarioJSON) {
       const usuario = JSON.parse(usuarioJSON);
       const usuarioId = usuario?.id;
-    
+
       if (usuarioId !== undefined && usuarioId !== null) {
-    
+
         const hojaDeServicio: HojaDeServicio = {
-          id: this.datoedit ? this.datoedit.id : null, 
+          id: this.datoedit ? this.datoedit.id : null,
           fechaIngreso: new Date(),
           ordenTrabajo: '',
           cliente: this.idCliente ? { ...this.clienteFormGroup.value, id: this.idCliente } : this.clienteFormGroup.value,
           equipo: this.idEquipo ? { ...this.equipoFormGroup.value, id: this.idEquipo } : this.equipoFormGroup.value,
           usuario: { id: usuarioId }
         };
-    
+
         console.log(hojaDeServicio)
-    
+
         const servicioObservable = this.datoedit ?
           this.hojaservicioService.actualizarHojaServicio(hojaDeServicio) :
           this.hojaservicioService.guardarHojaServicio(hojaDeServicio);
-    
+
         servicioObservable.subscribe(res => {
           this.dialog.close("guardar")
           swall.fire({
             icon: 'success',
             confirmButtonColor: '#0275d8',
-            html: `Se ${this.datoedit ? 'actualizó' : 'registró'} correctamente hoja de servicio:  <strong>${res.ordenTrabajo}</strong>`,
+            html: `Se ${this.datoedit ? 'actualizó' : 'registró'} correctamente hoja de servicio:  <strong>${res.id}</strong>`,
           });
         });
-    
+
       } else {
         console.log('id error');
       }
     } else {
       console.log('usuario no encontrado');
     }
-    
-    
+
+
   }
-  
+
 
   isValidField(field: string): boolean | null {
     return (
       this.clienteFormGroup.controls[field].errors &&
       this.clienteFormGroup.controls[field].touched
+    );
+  }
+
+  isValidField2(field: string): boolean | null {
+    return (
+      this.equipoFormGroup.controls[field].errors &&
+      this.equipoFormGroup.controls[field].touched
     );
   }
 
@@ -189,44 +231,41 @@ export class CrearComponent implements OnInit{
 
     for (const key of Object.keys(errors)) {
       switch (key) {
-        
+
         case 'required':
-          return `${field} es requerido`;
-        
+          return `El campo es requerido`;
+
         case 'pattern2':
           return `Tiene que ser númerico `;
+        case 'patternTexto':
+          return `Tiene que ser texto `;
 
         case 'longitudIncorrecta':
-            const errorObj = errors[field];
-            if (errorObj && 'requiredLength' in errorObj) {
-                const longitudRequerida = errorObj.requiredLength;
-                return `Obligatorio ${longitudRequerida} dígitos.`;
-            } else {
-                return 'Error de longitud';
-            }
-        
-      
+          const errorObj = errors[field];
+          if (errorObj && 'requiredLength' in errorObj) {
+            const longitudRequerida = errorObj.requiredLength;
+            return `Obligatorio ${longitudRequerida} dígitos.`;
+          } else {
+            return 'Error de longitud';
+          }
+
+
         case 'email':
           return `${field} no tiene el formato correcto`;
 
         case 'minlength':
-            const minLength = errors['minlength']?.requiredLength;
-            return `debe tener al menos ${minLength} digitos`;  
-          
+          const minLength = errors['minlength']?.requiredLength;
+          return `debe tener al menos ${minLength} digitos`;
+
         case 'maxlength':
-              const maxLength = errors['maxlength']?.requiredLength;
-              return `debe tener con maximo ${maxLength} digitos`;
+          const maxLength = errors['maxlength']?.requiredLength;
+          return `debe tener con maximo ${maxLength} digitos`;
       }
     }
     return null;
   }
 
-  isValidField2(field: string): boolean | null {
-    return (
-      this.equipoFormGroup.controls[field].errors &&
-      this.equipoFormGroup.controls[field].touched
-    );
-  }
+
 
   getFieldError2(field: string): string | null {
     if (!this.equipoFormGroup.controls[field]) return null;
@@ -235,33 +274,33 @@ export class CrearComponent implements OnInit{
 
     for (const key of Object.keys(errors)) {
       switch (key) {
-        
+
         case 'required':
           return `${field} es requerido`;
-        
+
         case 'pattern2':
-            return `Tiene que ser númerico `;
-  
+          return `Tiene que ser númerico `;
+
         case 'longitudIncorrecta':
           const errorObj = errors[field];
           if (errorObj && 'requiredLength' in errorObj) {
-              const longitudRequerida = errorObj.requiredLength;
-              return `Obligatorio ${longitudRequerida} dígitos.`;
+            const longitudRequerida = errorObj.requiredLength;
+            return `Obligatorio ${longitudRequerida} dígitos.`;
           } else {
-              return 'Error de longitud';
+            return 'Error de longitud';
           }
-          
+
 
         case 'email':
           return `${field} no tiene el formato correcto`;
 
         case 'minlength':
-            const minLength = errors['minlength']?.requiredLength;
-            return `debe tener al menos ${minLength} digitos`;
-          
+          const minLength = errors['minlength']?.requiredLength;
+          return `debe tener al menos ${minLength} digitos`;
+
         case 'maxlength':
-              const maxLength = errors['maxlength']?.requiredLength;
-              return `debe tener con maximo ${maxLength} digitos`;
+          const maxLength = errors['maxlength']?.requiredLength;
+          return `debe tener con maximo ${maxLength} digitos`;
       }
     }
     return null;

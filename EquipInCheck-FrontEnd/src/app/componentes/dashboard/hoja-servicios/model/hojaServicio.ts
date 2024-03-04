@@ -9,5 +9,6 @@ export interface HojaDeServicio {
   ordenTrabajo: string;
   cliente: Cliente;
   equipo: Equipo;
+
   usuario: Usuario;
 }

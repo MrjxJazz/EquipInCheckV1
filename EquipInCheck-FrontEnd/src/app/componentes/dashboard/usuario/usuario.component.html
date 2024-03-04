@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-6 mb-2">
                 <mat-card-title>
-                    &nbsp; &nbsp;Lista de Usuarios
+                    &nbsp; &nbsp;Listado de técnicos
                 </mat-card-title>
             </div>
         </div>
@@ -15,14 +15,12 @@
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-8">
-                                  
-
-
+                                    <mat-form-field style="width: 100%;">
+                                        <mat-label>Búsqueda por apellido y nombre</mat-label>
+                                        <input matInput (keyup)="aplicarFiltro($event)"  style="width: 100%;" #input>
+                                    </mat-form-field>
                                 </div>
                                 <div class="col-4" style="margin-top: 18px;">
-
-
-
 
                                     <mat-checkbox color="primary" class="example-margin" [(ngModel)]="estadoFiltro"
                                         (click)="mostrarInactivos()">Mostrar Inactivos</mat-checkbox>
@@ -30,7 +28,7 @@
                             </div>
                         </div>
                         <div class="col-6 text-end">
-                            <button class="btn btn-primary" (click)="abrirDialogoNuevoUsuario()">Nuevo Usuario</button>
+                            <button class="btn btn-primary" (click)="abrirDialogoNuevoUsuario()">Nuevo Técnico</button>
                         </div>
                     </div>
                     <div class="mat-elevation-z8" style="max-height: 400px; overflow-y: auto;">
@@ -86,10 +84,7 @@
                                 <td mat-cell *matCellDef="let fila">
                                     <a class="pointer iconosAccion" matTooltip="Editar Usuario"
                                         (click)="editarUsuario(fila)"><mat-icon class="success-icon">edit</mat-icon></a>
-                                    <a class="pointer iconosAccion" matTooltip="Eliminar Usuario"
-                                        (click)="eliminarUsuario(fila)">
-                                        <mat-icon class="danger-icon">delete</mat-icon>
-                                    </a>
+                                 
                                    
                                     <a class="pointer iconosAccion" matTooltip="{{ fila.estado ? 'Bloquear Usuario' : 'Habilitar Usuario' }}" (click)="bloquearUsuario(fila)">
                                         <mat-icon class="danger-icon">{{ fila.estado ? 'not_interested' : 'done' }}</mat-icon>

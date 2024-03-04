@@ -7,7 +7,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Roles, Usuario } from '../model/usuario';
 import swall from 'sweetalert2';
 
-
 @Component({
   selector: 'app-crear',
   templateUrl: './crear.component.html',
@@ -16,7 +15,7 @@ import swall from 'sweetalert2';
 export class CrearComponent implements OnInit {
 
   usuarioForm: FormGroup
-  titulo: string = "Nuevo Usuario";
+  titulo: string = "Nuevo Técnico";
   tituloBoton:string ="Guardar"
   correoOriginal?: string;
 
@@ -60,7 +59,7 @@ export class CrearComponent implements OnInit {
           this.usuarioForm.get('correoElectronico')?.setValue(u.correoElectronico);
         })
 
-      this.titulo = "Editar Usuario";
+      this.titulo = "Editar Técnico";
       this.tituloBoton = "Actualizar";
 
     }
